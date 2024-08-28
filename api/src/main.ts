@@ -5,7 +5,7 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
+import 'reflect-metadata';
 import { NotebookModule } from './notebook/notebook.module';
 
 async function bootstrap() {
