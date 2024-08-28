@@ -1,0 +1,10 @@
+{
+  "name": "notebook-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/notebook-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["notebook"],
+  "// targets": "to see all targets run: nx show project notebook-e2e --web",
+  "targets": {}
+}
