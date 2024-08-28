@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { NotebookService } from './notebook.service';
 import { Task } from './notebook.entity';
+import { CreateNotebookInput } from '../dto/create-notebook.input'; // Assicurati che i DTO siano corretti
+import { UpdateNotebookInput } from '../dto/update-notebook.input';
 
 @Controller('notebooks')
 export class NotebookController {
@@ -16,21 +18,19 @@ export class NotebookController {
     return this.notebookService.getNotebookById(id);
   }
 
-  @Post()
+  @Post('/create')
   async createNotebook(
-    @Body('title') title: string,
-    @Body('content') content: string,
+    @Body() createNotebookInput: CreateNotebookInput, // Usa DTO per i dati di input
   ): Promise<Task> {
-    return this.notebookService.createNotebook(title, content);
+    return this.notebookService.createNotebook(createNotebookInput);
   }
 
   @Put(':id')
   async updateNotebook(
     @Param('id') id: string,
-    @Body('title') title: string,
-    @Body('content') content: string,
+    @Body() updateNotebookInput: UpdateNotebookInput, // Usa DTO per i dati di input
   ): Promise<Task> {
-    return this.notebookService.updateNotebook(id, { title, description:content  });
+    return this.notebookService.updateNotebook( updateNotebookInput);
   }
 
   @Delete(':id')

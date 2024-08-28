@@ -10,7 +10,7 @@ export class Task {
   title!: string;
 
   @Property()
-  description!: string;
+  content!: string;
 
   @Property({ default: false })
   completed: boolean = false;
