@@ -1,6 +1,6 @@
 import React from 'react';
-import Styled from 'styled-components';
 import { useQuery, gql } from '@apollo/client';
+import { Box, Heading, Text, List, ListItem, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
 import { NotebookType } from "../../../../api/src/notebook/notebook.type";
 
 const GET_NOTEBOOKS = gql`
@@ -15,63 +15,36 @@ const GET_NOTEBOOKS = gql`
   }
 `;
 
-const NotebookList = Styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-
-  h2 {
-    margin: 0;
-    font-size: 18px;
-    color: #555;
-  }
-
-  p {
-    margin: 10px 0 0;
-    color: #666;
-  }
-`;
-
 const NotebookListComponent: React.FC = () => {
   const { loading, error, data } = useQuery<{ notebooks: NotebookType[] }>(GET_NOTEBOOKS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Spinner size="xl" />;
+  if (error) return (
+    <Alert status="error">
+      <AlertIcon />
+      Error: {error.message}
+    </Alert>
+  );
 
   return (
-    <NotebookList>
-      <h1>Notebooks</h1>
-      <ul>
+    <Box width="100%" maxWidth="800px" margin="0 auto" padding="20px" bg="white" borderRadius="md" boxShadow="md">
+      <Heading as="h1" size="xl" marginBottom="4">Notebooks</Heading>
+      <List spacing={4}>
         {data?.notebooks.map((notebook: NotebookType) => (
-          <li key={notebook._id}>
-            <h2>{notebook.title}</h2>
-            <p>{notebook.content}</p>
-          </li>
+          <ListItem
+            key={notebook._id}
+            padding="4"
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.50"
+            boxShadow="md"
+          >
+            <Heading as="h2" size="md" marginBottom="2">{notebook.title}</Heading>
+            <Text>{notebook.content}</Text>
+          </ListItem>
         ))}
-      </ul>
-    </NotebookList>
+      </List>
+    </Box>
   );
 };
 
