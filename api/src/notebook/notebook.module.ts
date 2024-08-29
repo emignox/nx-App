@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { MikroOrmModule} from '@mikro-orm/nestjs';
 import { NotebookService } from './notebook.service';
 import { NotebookController } from './notebook.controller';
 import { Task } from './notebook.entity';
@@ -16,6 +16,7 @@ import { NotebookResolver } from './notebook.resolver';
       clientUrl: 'mongodb://localhost:27017/notebook-management', // URL del database MongoDB
       entities: [Task], // Le entità che MikroORM gestirà
       dbName: 'notebook-management', // Nome del database
+      allowGlobalContext:true
     })),
     MikroOrmModule.forFeature([Task]), // Configurazione dell'entità Task per MikroORM
     GraphQLModule.forRoot<ApolloDriverConfig>({

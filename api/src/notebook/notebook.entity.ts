@@ -9,7 +9,7 @@ export class Task {
   @Property()
   title!: string;
 
-  @Property()
+  @Property({ default: '' }) // Imposta un valore di default per content
   content!: string;
 
   @Property({ default: false })

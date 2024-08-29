@@ -9,9 +9,15 @@ export class NotebookResolver {
   constructor(private readonly notebookService: NotebookService) {}
 
   @Query(() => [NotebookType])
-  async notebooks() {
-    return this.notebookService.getNotebooks();
-  }
+async notebooks() {
+  const notebooks = await this.notebookService.getNotebooks();
+  notebooks.forEach(notebook => {
+    if (!notebook.content) {
+      console.warn(`Notebook with ID ${notebook._id} has null content.`);
+    }
+  });
+  return notebooks;
+}
 
   @Mutation(() => NotebookType)
   async createNotebook(

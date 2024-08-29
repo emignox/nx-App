@@ -28,10 +28,11 @@ export class NotebookController {
   @Put(':id')
   async updateNotebook(
     @Param('id') id: string,
-    @Body() updateNotebookInput: UpdateNotebookInput, // Usa DTO per i dati di input
+    @Body() updateNotebookInput: UpdateNotebookInput
   ): Promise<Task> {
-    return this.notebookService.updateNotebook( updateNotebookInput);
+    return this.notebookService.updateNotebook({ id, ...updateNotebookInput });
   }
+
 
   @Delete(':id')
   async deleteNotebook(@Param('id') id: string): Promise<void> {

@@ -8,8 +8,8 @@ export class NotebookType {
   @Field()
   title!: string;
 
-  @Field()
-  content!: string;
+  @Field({nullable:true}) // Rendi content opzionale
+  content?: string;
 
   @Field()
   createdAt!: Date;

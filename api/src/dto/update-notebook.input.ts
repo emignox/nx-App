@@ -1,8 +1,8 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateNotebookInput {
-  @Field(() => ID)
+  @Field()
   id!: string;
 
   @Field({ nullable: true })

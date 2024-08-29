@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task } from './notebook.entity';
-import { ObjectId, MongoEntityManager } from '@mikro-orm/mongodb';
+import { MongoEntityManager, ObjectId } from '@mikro-orm/mongodb';
 import { MikroORM } from '@mikro-orm/core';
 import { CreateNotebookInput } from '../dto/create-notebook.input';
 import { UpdateNotebookInput } from '../dto/update-notebook.input';
@@ -17,15 +17,15 @@ export class NotebookService {
     const { title, content } = createNotebookInput;
     const notebook = new Task();
     notebook.title = title;
-    notebook.content = content; // Assicurati che 'content' sia corretto
+    notebook.content = content;
     await this.em.persistAndFlush(notebook);
     return notebook;
   }
 
-  async getNotebookById(id: string): Promise<Task> {
-    const notebook = await this.em.findOne(Task, { _id: new ObjectId(id) });
+  async getNotebookById(_id: string): Promise<Task> {
+    const notebook = await this.em.findOne(Task, { _id: new ObjectId(_id) });
     if (!notebook) {
-      throw new NotFoundException(`Notebook with ID ${id} not found`);
+      throw new NotFoundException(`Notebook with ID ${_id} not found`);
     }
     return notebook;
   }
@@ -41,15 +41,15 @@ export class NotebookService {
       throw new NotFoundException(`Notebook with ID ${id} not found`);
     }
     if (title) notebook.title = title;
-    if (content) notebook.content = content; // Assicurati che 'content' sia corretto
+    if (content !== undefined) notebook.content = content; // Aggiorna solo se content è definito
     await this.em.flush();
     return notebook;
   }
 
-  async deleteNotebook(id: string): Promise<void> {
-    const notebook = await this.em.findOne(Task, { _id: new ObjectId(id) });
+  async deleteNotebook(_id: string): Promise<void> {
+    const notebook = await this.em.findOne(Task, { _id: new ObjectId(_id) });
     if (!notebook) {
-      throw new NotFoundException(`Notebook with ID ${id} not found`);
+      throw new NotFoundException(`Notebook with ID ${_id} not found`);
     }
     await this.em.removeAndFlush(notebook);
   }
