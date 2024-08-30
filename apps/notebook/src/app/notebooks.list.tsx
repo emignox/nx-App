@@ -1,9 +1,10 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Box, Heading, Text, List, ListItem, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import { Box, Heading, Text, List, ListItem, Spinner, Alert, AlertIcon, Flex } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { NotebookType } from '../../../../api/src/notebook/notebook.type';
 import CreateNotebook from './notebook.create.note';
+import DeleteNote from './delete.note'
 
 const GET_NOTEBOOKS = gql`
   query GetNotebooks {
@@ -35,6 +36,8 @@ const NotebookListComponent: React.FC = () => {
       <List spacing={4}>
         {notebooks.map((notebook: NotebookType) => (
           <ListItem
+          display={'flex'}
+          justifyContent={'space-between'}
             key={notebook._id}
             padding="4"
             borderWidth="1px"
@@ -45,7 +48,7 @@ const NotebookListComponent: React.FC = () => {
             <Link to={`/notebook/${notebook._id}`}>
               <Heading as="h2" size="md" marginBottom="2">{notebook.title}</Heading>
             </Link>
-            <Text>{notebook.content}</Text>
+            <DeleteNote id={notebook._id} onDelete={refetch} />
           </ListItem>
         ))}
       </List>
