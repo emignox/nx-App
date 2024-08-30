@@ -23,6 +23,9 @@ import { NotebookResolver } from './notebook.resolver';
       driver: ApolloDriver, // Configura il driver Apollo
       autoSchemaFile: true, // Genera automaticamente il file di schema
       playground: true, // Abilita GraphQL Playground per testare le query
+      subscriptions: {
+        'graphql-ws': true, // Abilita graphql-ws per le subscriptions
+      },
     })],
   providers: [NotebookService, NotebookResolver],
   controllers: [NotebookController],

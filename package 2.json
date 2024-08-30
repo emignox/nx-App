@@ -1,0 +1,15 @@
+{
+  "name": "@task-management-app/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@nx/cypress": "19.6.3",
+    "@nx/react": "19.6.3",
+    "@nx/vite": "19.6.3",
+    "@nx/workspace": "19.6.3",
+    "nx": "19.6.3"
+  }
+}

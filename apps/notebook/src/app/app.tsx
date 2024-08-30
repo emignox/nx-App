@@ -1,28 +1,17 @@
-import { Box, Heading } from '@chakra-ui/react';
-import Notebook from './notebooks.list';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NotebookList from './notebooks.list'; // Lista delle note
+import NotebookDetail from './single.note'; // Dettaglio di una singola nota
 
-const MyComponent: React.FC = () => {
+const App = () => {
   return (
-    <>
-    <Box
-      display={'flex'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      textAlign={'center'}
-      bg={"#B3E6DC"}
-      margin={5}
-      p={2}
-      height="100px" // Assicurati di impostare un'altezza sufficiente
-      rounded={"20"}
-    >
-      <Heading as="h1" size="xl" >
-        My Notebook
-      </Heading>
-    </Box>
-          <Notebook />
-          </>
-
+    <Router>
+      <Routes>
+        <Route path="/" element={<NotebookList />} />
+        <Route path="/notebook/:id" element={<NotebookDetail  />} />
+      </Routes>
+    </Router>
   );
 };
 
-export default MyComponent;
+export default App;

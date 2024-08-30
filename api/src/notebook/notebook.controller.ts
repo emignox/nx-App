@@ -33,7 +33,6 @@ export class NotebookController {
     return this.notebookService.updateNotebook({ id, ...updateNotebookInput });
   }
 
-
   @Delete(':id')
   async deleteNotebook(@Param('id') id: string): Promise<void> {
     return this.notebookService.deleteNotebook(id);
