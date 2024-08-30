@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { NotebookType } from '../../../../api/src/notebook/notebook.type';
 import CreateNotebook from './notebook.create.note';
 import DeleteNote from './delete.note'
+import ModifyNote from './modify.note';
 
 const GET_NOTEBOOKS = gql`
   query GetNotebooks {
@@ -36,6 +37,8 @@ const NotebookListComponent: React.FC = () => {
       <List spacing={4}>
         {notebooks.map((notebook: NotebookType) => (
           <ListItem
+          _hover={{ transform: 'scale(1.02)'}}
+          justifyItems={'center'}
           display={'flex'}
           justifyContent={'space-between'}
             key={notebook._id}
@@ -45,9 +48,14 @@ const NotebookListComponent: React.FC = () => {
             bg="gray.50"
             boxShadow="md"
           >
+            <Box>
             <Link to={`/notebook/${notebook._id}`}>
               <Heading as="h2" size="md" marginBottom="2">{notebook.title}</Heading>
             </Link>
+            <Link to={`/notebook/${notebook._id}`}>
+                <ModifyNote id={notebook._id} />
+            </Link>
+            </Box>
             <DeleteNote id={notebook._id} onDelete={refetch} />
           </ListItem>
         ))}

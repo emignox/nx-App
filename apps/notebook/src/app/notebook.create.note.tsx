@@ -46,6 +46,8 @@ const CreateNotebook: React.FC<{ refetch: () => void }> = ({ refetch }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            placeholder="Enter Note title"
+            maxLength={50} // Limite di caratteri per il titolo
           />
         </FormControl>
         <FormControl id="content" mb="4">
@@ -54,6 +56,9 @@ const CreateNotebook: React.FC<{ refetch: () => void }> = ({ refetch }) => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
+            placeholder="Enter Note content"
+            
+
           />
         </FormControl>
         <Button
