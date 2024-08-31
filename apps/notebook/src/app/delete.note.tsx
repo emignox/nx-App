@@ -2,7 +2,6 @@ import React from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { IconButton, useToast } from '@chakra-ui/react';
 import { FaTrash } from 'react-icons/fa'; // Importa l'icona del cestino
-import { type } from 'os';
 
 // Definisci la mutazione per eliminare una nota
 const DELETE_NOTEBOOK = gql`
