@@ -1,66 +1,10 @@
-// import { Injectable, NotFoundException } from '@nestjs/common';
-// import { Task } from './notebook.entity';
-// import { MongoEntityManager, ObjectId } from '@mikro-orm/mongodb';
-// import { MikroORM } from '@mikro-orm/core';
-// import { CreateNotebookInput } from '../dto/create-notebook.input';
-// import { UpdateNotebookInput } from '../dto/update-notebook.input';
-
-// @Injectable()
-// export class NotebookService {
-//   private readonly em: MongoEntityManager;
-
-//   constructor(private readonly orm: MikroORM) {
-//     this.em = this.orm.em as MongoEntityManager;
-//   }
-
-//   async createNotebook(createNotebookInput: CreateNotebookInput): Promise<Task> {
-//     const { title, content } = createNotebookInput;
-//     const notebook = new Task();
-//     notebook.title = title;
-//     notebook.content = content;
-//     await this.em.persistAndFlush(notebook);
-//     return notebook;
-//   }
-
-//   async getNotebookById(_id: string): Promise<Task> {
-//     const notebook = await this.em.findOne(Task, { _id: new ObjectId(_id) });
-//     if (!notebook) {
-//       throw new NotFoundException(`Notebook with ID ${_id} not found`);
-//     }
-//     return notebook;
-//   }
-
-//   async getNotebooks(): Promise<Task[]> {
-//     return this.em.find(Task, {});
-//   }
-
-//   async updateNotebook(updateNotebookInput: UpdateNotebookInput): Promise<Task> {
-//     const { id, title, content } = updateNotebookInput;
-//     const notebook = await this.em.findOne(Task, { _id: new ObjectId(id) });
-//     if (!notebook) {
-//       throw new NotFoundException(`Notebook with ID ${id} not found`);
-//     }
-//     if (title) notebook.title = title;
-//     if (content !== undefined) notebook.content = content; // Aggiorna solo se content è definito
-//     await this.em.flush();
-//     return notebook;
-//   }
-
-//   async deleteNotebook(_id: string): Promise<void> {
-//     const notebook = await this.em.findOne(Task, { _id: new ObjectId(_id) });
-//     if (!notebook) {
-//       throw new NotFoundException(`Notebook with ID ${_id} not found`);
-//     }
-//     await this.em.removeAndFlush(notebook);
-//   }
-// }
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task } from './notebook.entity';
 import { MongoEntityManager, ObjectId } from '@mikro-orm/mongodb';
 import { MikroORM, EntityManager } from '@mikro-orm/core';
 import { CreateNotebookInput } from '../dto/create-notebook.input';
 import { UpdateNotebookInput } from '../dto/update-notebook.input';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class NotebookService {
@@ -70,48 +14,73 @@ export class NotebookService {
     return this.orm.em.fork(); // Usa il metodo fork() per creare un nuovo EntityManager per il contesto specifico
   }
 
-  async createNotebook(createNotebookInput: CreateNotebookInput): Promise<Task> {
-    const em = this.em; // Ottieni l'EntityManager locale
+  // Funzione per ottenere tutte le note di un utente specifico
+  async getUserTasks(userId: string): Promise<Task[]> {
+    const tasks = await this.em.find(Task, { user: new ObjectId(userId) });
+
+    if (!tasks || tasks.length === 0) {
+      throw new NotFoundException(`No tasks found for user with ID ${userId}`);
+    }
+
+    return tasks;
+  }
+
+  // Creazione di una nuova nota associata all'utente
+  async createNotebook(createNotebookInput: CreateNotebookInput, userId: string): Promise<Task> {
+    const em = this.em;
     const { title, content } = createNotebookInput;
+    const user = await em.findOne(User, { _id: new ObjectId(userId) });
+    if (!user) {
+        throw new NotFoundException(`User with ID ${userId} not found`);
+    }
     const notebook = new Task();
     notebook.title = title;
     notebook.content = content;
+    notebook.user = user;
+
     await em.persistAndFlush(notebook);
     return notebook;
   }
 
-  async getNotebookById(_id: string): Promise<Task> {
-    const em = this.em; // Ottieni l'EntityManager locale
-    const notebook = await em.findOne(Task, { _id: new ObjectId(_id) });
-    if (!notebook) {
-      throw new NotFoundException(`Notebook with ID ${_id} not found`);
-    }
-    return notebook;
-  }
-
-  async getNotebooks(): Promise<Task[]> {
-    const em = this.em; // Ottieni l'EntityManager locale
-    return em.find(Task, {});
-  }
-
-  async updateNotebook(updateNotebookInput: UpdateNotebookInput): Promise<Task> {
-    const em = this.em; // Ottieni l'EntityManager locale
-    const { id, title, content } = updateNotebookInput;
+  // Recupera una singola nota per ID
+  async getNotebookById(id: string): Promise<Task> {
+    const em = this.em;
     const notebook = await em.findOne(Task, { _id: new ObjectId(id) });
     if (!notebook) {
       throw new NotFoundException(`Notebook with ID ${id} not found`);
     }
+    return notebook;
+  }
+
+  // Recupera tutte le note
+  async getNotebooks(): Promise<Task[]> {
+    const em = this.em;
+    return em.find(Task, {});
+  }
+
+  // Aggiorna una nota esistente
+  async updateNotebook(updateNotebookInput: UpdateNotebookInput, userId: string): Promise<Task> {
+    const em = this.em;
+    const { id, title, content } = updateNotebookInput;
+
+    const notebook = await em.findOne(Task, { _id: new ObjectId(id), user: new ObjectId(userId) });
+    if (!notebook) {
+      throw new NotFoundException(`Notebook with ID ${id} not found for user with ID ${userId}`);
+    }
+
     if (title) notebook.title = title;
-    if (content !== undefined) notebook.content = content; // Aggiorna solo se content è definito
+    if (content !== undefined) notebook.content = content;
+
     await em.flush();
     return notebook;
   }
 
-  async deleteNotebook(_id: string): Promise<void> {
-    const em = this.em; // Ottieni l'EntityManager locale
-    const notebook = await em.findOne(Task, { _id: new ObjectId(_id) });
+  // Elimina una nota
+  async deleteNotebook(id: string, userId: string): Promise<void> {
+    const em = this.em;
+    const notebook = await em.findOne(Task, { _id: new ObjectId(id), user: new ObjectId(userId) });
     if (!notebook) {
-      throw new NotFoundException(`Notebook with ID ${_id} not found`);
+      throw new NotFoundException(`Notebook with ID ${id} not found for user with ID ${userId}`);
     }
     await em.removeAndFlush(notebook);
   }

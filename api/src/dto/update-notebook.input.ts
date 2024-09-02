@@ -10,4 +10,6 @@ export class UpdateNotebookInput {
 
   @Field({ nullable: true })
   content?: string;
+
+
 }

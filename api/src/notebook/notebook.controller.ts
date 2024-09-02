@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Req } from '@nestjs/common';
 import { NotebookService } from './notebook.service';
 import { Task } from './notebook.entity';
-import { CreateNotebookInput } from '../dto/create-notebook.input'; // Assicurati che i DTO siano corretti
+import { CreateNotebookInput } from '../dto/create-notebook.input';
 import { UpdateNotebookInput } from '../dto/update-notebook.input';
+import { Request } from 'express';
 
 @Controller('notebooks')
 export class NotebookController {
@@ -18,23 +19,34 @@ export class NotebookController {
     return this.notebookService.getNotebookById(id);
   }
 
-  @Post('/create')
+  @Get('user/notebooks/:userId')
+  async getUserNotebooks(@Param('userId') userId: string): Promise<Task[]> {
+    return this.notebookService.getUserTasks(userId);
+  }
+
+ 
+@Post('/create')
   async createNotebook(
-    @Body() createNotebookInput: CreateNotebookInput, // Usa DTO per i dati di input
+    @Body() createNotebookInput: CreateNotebookInput,
+    @Req() req: Request & { user?: { id: string } },
   ): Promise<Task> {
-    return this.notebookService.createNotebook(createNotebookInput);
+    const userId = req.user?.id;
+    return this.notebookService.createNotebook(createNotebookInput, userId);
   }
 
   @Put(':id')
-  async updateNotebook(
+async updateNotebook(
     @Param('id') id: string,
-    @Body() updateNotebookInput: UpdateNotebookInput
+    @Body() updateNotebookInput: UpdateNotebookInput,
+    @Req() req: Request & { user?: { id: string } },
   ): Promise<Task> {
-    return this.notebookService.updateNotebook({ id, ...updateNotebookInput });
+    const userId = req.user?.id;
+    return this.notebookService.updateNotebook({ id, ...updateNotebookInput }, userId);
   }
 
   @Delete(':id')
-  async deleteNotebook(@Param('id') id: string): Promise<void> {
-    return this.notebookService.deleteNotebook(id);
+  async deleteNotebook(@Param('id') id: string, @Req() req: Request & {user?: {id:string}}): Promise<void> {
+    const userId = req.user?.id;
+    return this.notebookService.deleteNotebook(id, userId);
   }
 }

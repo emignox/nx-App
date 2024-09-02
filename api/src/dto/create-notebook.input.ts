@@ -7,4 +7,6 @@ export class CreateNotebookInput {
 
   @Field()
   content!: string;
+ 
+
 }
