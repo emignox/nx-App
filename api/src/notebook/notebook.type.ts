@@ -1,4 +1,5 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
+import { UserType } from "../user/user.type"
 
 @ObjectType()
 export class NotebookType {
@@ -16,4 +17,7 @@ export class NotebookType {
 
   @Field()
   updatedAt!: Date;
+
+  @Field(()=> UserType)
+  user!: UserType;
 }

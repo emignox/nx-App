@@ -1,5 +1,6 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property,ManyToOne } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
+import { User } from "../user/user.entity";
 
 @Entity()
 export class Task {
@@ -20,4 +21,8 @@ export class Task {
 
   @Property({ onCreate: () => new Date(), onUpdate: () => new Date() })
   updatedAt!: Date;
+
+  @ManyToOne(() => User)
+  user!: User;
+
 }
