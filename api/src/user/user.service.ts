@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException,UnauthorizedException } from '@nestjs/common';
 import {User} from './user.entity';
+import * as jwt from 'jsonwebtoken';
 import { MikroORM,EntityManager } from '@mikro-orm/mongodb';
 import bcrypt from 'bcrypt';
 import { CreateUserInput } from './dto.user/user.create.input';
 import { UpdateUserInput } from './dto.user/user.update.input';
 import { ObjectId } from '@mikro-orm/mongodb';
+import { loginUserInput } from './dto.user/user.login.input';
 
 @Injectable()
 export class UserService {
@@ -35,6 +37,29 @@ export class UserService {
             throw new Error('Error creating user')
         }
     }
+
+    async loginUser(loginUserInput: loginUserInput): Promise<{ accessToken: string }> {
+        const { email, password } = loginUserInput;
+        const user = await this.em.findOne(User, { email });
+
+        if (!user) {
+            throw new UnauthorizedException('Invalid credentials');
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            throw new UnauthorizedException('Invalid credentials');
+        }
+
+        // Genera il payload per il token JWT
+        const payload = { sub: user._id, email: user.email };
+
+        // Genera il token JWT con una chiave segreta
+        const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+
+        return { accessToken };
+    }
+
     async updateUser(updateUserInput: UpdateUserInput): Promise<User> {
         const em = this.em;
         const { id, name, email, password,newPassword } = updateUserInput;
@@ -44,13 +69,11 @@ export class UserService {
         }
         if(name) user.name = name
         if (email) user.email = email;
-        const isMatch =  await bcrypt.compare(password, user.password);
         if (password) {
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 throw new UnauthorizedException('Incorrect password');
             }
-            // Se viene fornita una nuova password, aggiornare l'hash
             if (newPassword) {
                 user.password = await bcrypt.hash(newPassword, 10);
             }
@@ -58,5 +81,6 @@ export class UserService {
         await em.flush()
         return user;
     }
+
 
 }
