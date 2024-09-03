@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, Heading, useToast, VStack, Flex } from '@chakra-ui/react';
-import { useMutation } from '@apollo/client';
+import { useMutation, ApolloClient } from '@apollo/client';
 import { gql } from 'graphql-tag';
-import GetQuerys from "../components/getNotes"
+import { GET_USER_NOTEBOOKS } from '../querys/queryGetNote';
+import  GetNotes from '../components/getNotes';
 
- export const CREATE_NOTEBOOK_MUTATION = gql`
+export const CREATE_NOTEBOOK_MUTATION = gql`
   mutation CreateNotebook($input: CreateNotebookInput!) {
     createNotebook(createNotebookInput: $input) {
       _id
@@ -21,18 +22,34 @@ import GetQuerys from "../components/getNotes"
   }
 `;
 
-const CreateNotebookForm = () => {
-  const [formState, setFormState] = useState({
-    title: '',
-    content: '',
-  });
+interface CreateNotebookFormProps {
+  client: ApolloClient<object>;
+}
 
+const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
+  const [formState, setFormState] = useState({ title: '', content: '' });
   const toast = useToast();
+
   const [createNotebook, { loading }] = useMutation(CREATE_NOTEBOOK_MUTATION, {
     onCompleted: (data) => {
+      const newNotebook = data.createNotebook;
+
+      // Read existing notebooks from cache
+      const existingNotebooks = client.readQuery({ query: GET_USER_NOTEBOOKS });
+
+      // If there are existing notebooks, update the cache
+      if (existingNotebooks?.getUserNotebooks) {
+        client.writeQuery({
+          query: GET_USER_NOTEBOOKS,
+          data: {
+            getUserNotebooks: [...existingNotebooks.getUserNotebooks, newNotebook],
+          },
+        });
+      }
+
       toast({
         title: "Notebook created.",
-        description: `Your notebook "${data.createNotebook.title}" has been created!`,
+        description: `Your notebook "${newNotebook.title}" has been created!`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -55,10 +72,7 @@ const CreateNotebookForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+    setFormState({ ...formState, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,22 +81,8 @@ const CreateNotebookForm = () => {
   };
 
   return (
-    <Flex 
-      direction="column"
-      minH="100vh"
-      align="center"
-      justify="center"
-      bg="gray.100"
-      px={4}
-    >
-      <Box
-        bg="white"
-        p={8}
-        borderRadius="lg"
-        boxShadow="lg"
-        maxW="400px"
-        w="full"
-      >
+    <Flex direction="column" minH="100vh" align="center" justify="center" bg="gray.100" px={4}>
+      <Box bg="white" p={8} borderRadius="lg" boxShadow="lg" maxW="400px" w="full">
         <Heading as="h1" size="lg" textAlign="center" mb={6} fontWeight="semibold" color="teal.500">
           Create Notebook
         </Heading>
@@ -131,7 +131,7 @@ const CreateNotebookForm = () => {
           </form>
         </VStack>
       </Box>
-      <GetQuerys />  
+      <GetNotes />
     </Flex>
   );
 };

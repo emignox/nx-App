@@ -1,9 +1,10 @@
-import { Resolver, Query, Mutation, Args, Context,  } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context, Subscription  } from '@nestjs/graphql';
 import { NotebookService } from './notebook.service';
 import { NotebookType } from './notebook.type';
 import { CreateNotebookInput } from '../dto/create-notebook.input';
 import { UpdateNotebookInput } from '../dto/update-notebook.input';
-import { UnauthorizedException ,NotFoundException } from '@nestjs/common';
+import { UnauthorizedException ,NotFoundException,Inject } from '@nestjs/common';
+import{PubSub} from 'graphql-subscriptions';
 
 
 interface MyContext {
@@ -19,7 +20,8 @@ interface MyContext {
 
 @Resolver(() => NotebookType)
 export class NotebookResolver {
-  constructor(private readonly notebookService: NotebookService) {}
+  constructor(private readonly notebookService: NotebookService,
+    @Inject('PUB_SUB') private pubSub:PubSub ) {}
 
   @Query(() => [NotebookType])
   async getAllNotebooks() {
@@ -84,21 +86,35 @@ async getUserNotebook(@Args('id') id: string, @Context() context: MyContext): Pr
     @Args('createNotebookInput') createNotebookInput: CreateNotebookInput,
     @Context() context: MyContext,
   ) {
-    // Logga il contesto completo
     console.log('Context:', context);
-  
+
     if (!context.user) {
       throw new UnauthorizedException('User is not in context');
     }
-  
+
     const userId = context.user.sub;
-  
+
     if (!userId) {
       throw new UnauthorizedException('User ID (sub) is not defined');
     }
-  
-    return this.notebookService.createNotebook(createNotebookInput, userId);
+
+    const notebook = await this.notebookService.createNotebook(createNotebookInput, userId);
+
+    // Pubblica l'evento notebookCreated dopo la creazione del notebook
+    this.pubSub.publish('notebookCreated', { notebookCreated: notebook });
+
+    return notebook;
   }
+
+  @Subscription(() => NotebookType, {
+    filter: (payload, variables, context) => {
+      return payload.notebookCreated.user._id === context.user?.sub;
+    },
+  })
+  notebookCreated() {
+    return this.pubSub.asyncIterator('notebookCreated');
+  }
+  
   
   @Mutation(() => NotebookType)
   async updateNotebook(

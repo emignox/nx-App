@@ -8,49 +8,63 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { NotebookResolver } from './notebook.resolver';
 import { JwtService } from '@nestjs/jwt';
-import { UserModule } from '../user/user.module'; // Importa il modulo User
+import { UserModule } from '../user/user.module';
 import { User } from '../user/user.entity';
 import * as dotenv from 'dotenv';
+import { PubSub } from 'graphql-subscriptions';
 
 dotenv.config();
-
-
-
 @Module({
   imports: [
     MikroOrmModule.forRoot(defineConfig({
       clientUrl: 'mongodb://localhost:27017/notebook-management',
-      entities: [Task, User], // Gestisci entrambe le entità
+      entities: [Task, User],
       dbName: 'notebook-management',
     })),
-    MikroOrmModule.forFeature([Task]), // Configura l'entità Task per MikroORM
-    UserModule, // Importa UserModule qui
+    MikroOrmModule.forFeature([Task]),
+    UserModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
       playground: true,
       subscriptions: {
-        'graphql-ws': true,
+        'graphql-ws': true, // Ensure the correct protocol is used
       },
-      context: ({ req }) => {
-        const token = req.headers.authorization || '';
-        const jwtService = new JwtService({ secret: process.env.JWT_SECRET || 'default_secret' });
+      context: ({ req, connection }) => {
         let user = null;
-    
-        if (token) {
-          try {
-            user = jwtService.verify(token.replace('Bearer ', ''));
-          } catch (err) {
-            console.warn('JWT verification failed:', err.message);
+        const jwtService = new JwtService({ secret: process.env.JWT_SECRET || 'default_secret' });
+      
+        if (connection) {
+          // For WebSocket connections
+          const token = connection.context.authToken;
+          if (token) {
+            try {
+              user = jwtService.verify(token.replace('Bearer ', ''));
+            } catch (err) {
+              console.warn('JWT verification failed:', err.message);
+            }
+          }
+        } else if (req) {
+          // For HTTP requests
+          const token = req.headers.authorization || '';
+          if (token) {
+            try {
+              user = jwtService.verify(token.replace('Bearer ', ''));
+            } catch (err) {
+              console.warn('JWT verification failed:', err.message);
+            }
           }
         }
-    
+      
         return { user };
       },
       
     }),
   ],
-  providers: [NotebookService, NotebookResolver],
+  providers: [NotebookService, NotebookResolver, {
+    provide: 'PUB_SUB',
+    useValue: new PubSub(),
+  }],
   controllers: [NotebookController],
 })
 export class NotebookModule {}
