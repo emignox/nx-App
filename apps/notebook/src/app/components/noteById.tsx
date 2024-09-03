@@ -24,7 +24,6 @@ const NotebookDetail = () => {
       bgGradient="linear(to-r, gray.900, gray.700)"
       width={"100%"}
       height={"100vh"}
-      p={4}
     >
        <Link as={RouterLink} to={"/my-notes"} color={"teal.500"} display={'flex'} alignItems={'center'} >
         <IoIosBackspace size={30}  /> 
@@ -41,12 +40,14 @@ const NotebookDetail = () => {
           <Text fontSize="lg" color="gray.300">
             {notebook.content}
           </Text>
-          <Text mt={4} fontSize="sm" color="gray.500">
+          <Box display={'flex'}  alignItems={'center'} justifyContent={'space-between'}  pt={3}>
+          <Text  fontSize="sm" color="gray.500">
             Created at: {new Date(notebook.createdAt).toLocaleString()}
           </Text>
           <Text fontSize="sm" color="gray.500">
             Updated at: {new Date(notebook.updatedAt).toLocaleString()}
           </Text>
+          </Box>
         </Box>
       </VStack>
       </Box>

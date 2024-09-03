@@ -79,6 +79,7 @@ const UpdateNotebookForm = () => {
             bg="gray.700"
             color="white"
             focusBorderColor="teal.400"
+            size={"sm"}
           />
         </FormControl>
         <FormControl id="content" isRequired mt={4}>
@@ -91,9 +92,10 @@ const UpdateNotebookForm = () => {
             bg="gray.700"
             color="white"
             focusBorderColor="teal.400"
+            size={'sm'}
           />
         </FormControl>
-        <Button type="submit" colorScheme="teal" mt={4}>
+        <Button type="submit" colorScheme="teal" mt={4} size={"sm"}>
           Update Notebook
         </Button>
       </Box>
