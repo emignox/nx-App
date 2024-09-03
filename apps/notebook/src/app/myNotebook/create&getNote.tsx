@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, Heading, useToast, VStack, Flex } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Heading, useToast, VStack, Flex, Textarea } from '@chakra-ui/react';
 import { useMutation, ApolloClient } from '@apollo/client';
 import { gql } from 'graphql-tag';
 import { GET_USER_NOTEBOOKS } from '../querys/queryGetNote';
-import  GetNotes from '../components/getNotes';
+import GetNotes from '../components/getNotes';
 
 export const CREATE_NOTEBOOK_MUTATION = gql`
   mutation CreateNotebook($input: CreateNotebookInput!) {
@@ -34,10 +34,8 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
     onCompleted: (data) => {
       const newNotebook = data.createNotebook;
 
-      // Read existing notebooks from cache
       const existingNotebooks = client.readQuery({ query: GET_USER_NOTEBOOKS });
 
-      // If there are existing notebooks, update the cache
       if (existingNotebooks?.getUserNotebooks) {
         client.writeQuery({
           query: GET_USER_NOTEBOOKS,
@@ -56,6 +54,8 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
         position: "top-right",
         variant: "subtle",
       });
+
+      setFormState({ title: '', content: '' }); // Reset the form after submission
     },
     onError: (error) => {
       toast({
@@ -70,7 +70,7 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
     }
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormState({ ...formState, [name]: value });
   };
@@ -81,87 +81,98 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
   };
 
   return (
-    <>
-    <Box  width="100%" display={'flex'}>
-    
+    <Box
+      bgGradient="linear(to-r, gray.900, gray.700)"
+      minH="100vh"
+      p={6}
+    >
+      <Flex
+        direction="column"
+        align="center"
+        justify="flex-start"
+        maxW={{ base: "90%", md: "80%", lg: "50%" }}
+        mx="auto"
+        pt={10}
+      >
         <Box
-          bg="white"
-          p={8}
+          width="100%"
+          bg="gray.800"
+          p={{ base: 6, md: 8 }}
           borderRadius="lg"
           boxShadow="2xl"
-          maxW="400px"
-          w="full"
-          transition="all 0.3s ease"
-          _hover={{ boxShadow: "lg" }}
-          height={"40%"}
-          position={"fixed"}
-          top={"20%"}
         >
-          <Heading
-            as="h1"
-            size="lg"
-            textAlign="center"
-            mb={6}
-            fontWeight="bold"
-            color="teal.600"
-          >
-            Create Notebook
+          <Heading color={'teal.300'} mb={4} textAlign="center">
+            Create a Note
           </Heading>
-          <VStack spacing={4}>
-            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+          <VStack spacing={6}>
+            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
               <FormControl id="title" isRequired>
-                <FormLabel fontSize="md" fontWeight="medium" color="gray.700">
+                <FormLabel
+                  fontSize="lg"
+                  fontWeight="medium"
+                  color="gray.300"
+                >
                   Title
                 </FormLabel>
                 <Input
+                  textColor={'white'}
                   type="text"
                   name="title"
                   value={formState.title}
                   onChange={handleChange}
                   focusBorderColor="teal.400"
-                  placeholder="Notebook title"
-                  bg="gray.50"
+                  placeholder="Enter notebook title"
+                  bg="gray.700"
                   borderRadius="md"
-                  size="md"
+                  size="sm"
+                  _hover={{ bg: "gray.600" }}
+                  _focus={{ bg: "gray.600", borderColor: "teal.500" }}
                 />
               </FormControl>
-              <FormControl id="content" isRequired>
-                <FormLabel fontSize="md" fontWeight="medium" color="gray.700">
+              <FormControl id="content" isRequired mt={4}>
+                <FormLabel
+                  fontSize="lg"
+                  fontWeight="medium"
+                  color="gray.300"
+                >
                   Content
                 </FormLabel>
-                <Input
-                  type="text"
+                <Textarea
+                  textColor={'white'}
                   name="content"
                   value={formState.content}
                   onChange={handleChange}
                   focusBorderColor="teal.400"
-                  placeholder="Notebook content"
-                  bg="gray.50"
+                  placeholder="Enter notebook content"
+                  bg="gray.700"
                   borderRadius="md"
-                  size="md"
+                  size="sm"
+                  rows={6}
+                  _hover={{ bg: "gray.600" }}
+                  _focus={{ bg: "gray.600", borderColor: "teal.500" }}
                 />
               </FormControl>
-              <Button
-                type="submit"
-                colorScheme="teal"
-                width="full"
-                mt={4}
-                isLoading={loading}
-                size="md"
-                fontWeight="medium"
-                borderRadius="md"
-              >
-                Create Notebook
-              </Button>
+              <Flex mt={6} justify="space-between">
+                <Button
+                  type="submit"
+                  colorScheme="teal"
+                  size="sm"
+                  fontWeight="bold"
+                  borderRadius="md"
+                  boxShadow="lg"
+                  isLoading={loading}
+                >
+                  Create Notebook
+                </Button>
+              </Flex>
             </form>
           </VStack>
         </Box>
-     <GetNotes />
-   </Box>
+      </Flex>
+      <GetNotes />
 
-   </>
+    </Box>
   );
 };
-
 
 export default CreateNotebookForm;

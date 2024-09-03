@@ -4,14 +4,14 @@ import Register from './auth/register';
 import Login from './auth/login';
 import MyNotes from './myNotebook/create&getNote'; 
 import client from './apollo.client';
-import NorteDetails from './components/noteById'
+import NoteDetails from './components/noteById'
 
 const App = () => {
   return (
     <>
     <Router>
       <Routes>
-        <Route path='note/:id' element={<NorteDetails />} />
+        <Route path='note/:id' element={<NoteDetails />} />
         <Route path='my-notes' element={<MyNotes client={client}  />} />
         <Route path='login' element={<Login />} />
       <Route path="/" element={<Register />} />

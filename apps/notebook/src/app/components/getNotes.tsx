@@ -4,6 +4,7 @@ import { Box, Heading, Text, Spinner, VStack, Link as ChakraLink, IconButton } f
 import { gql } from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { useDisclosure } from '@chakra-ui/react';
 
 interface UserNotebooksProps {
   _id: string;
@@ -106,34 +107,40 @@ const [deleteNotebook] = useMutation(DELETE_NOTEBOOK_MUTATION, {
 
   const reversedData = data?.getUserNotebooks?.slice().reverse();
 
-  return (
-    <VStack  spacing={4} align="stretch" maxW="3xl" mx="auto" mt={10} p={4}>
-      <Heading as="h2" size="xl" textAlign="center" color={"teal"} >
-        My Notebooks
-      </Heading>
-      {reversedData && reversedData.length > 0 ? (
-        reversedData.map((notebook: UserNotebooksProps) => (
-          <Box
-            key={notebook._id}
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            borderRadius="md"
-            bg="gray.50"
-            _hover={{ bg: "teal.50" }}
-            position="relative"
-          >
-            <Heading fontSize="xl" color={"teal"} >
-              <ChakraLink as={Link} to={`/note/${notebook._id}`}>
-                {notebook.title}
-              </ChakraLink>
-            </Heading>
-            <Text mt={4}>{notebook.content}</Text>
-            <Box display={'flex'} justifyContent={'space-between'}>
+
+  return (<VStack
+    spacing={4}
+    align="stretch"
+    maxW={{ base: "90%", md: "80%", lg: "50%" }} // Matching the width of the form
+    mx="auto"
+    mt={10}
+    p={4}
+  >
+    <Heading as="h2" size="xl" textAlign="center" color={"teal"}>
+      My Notebooks
+    </Heading>
+    {reversedData && reversedData.length > 0 ? (
+      reversedData.map((notebook: UserNotebooksProps) => (
+        <Box
+          bg="gray.800"
+          key={notebook._id}
+          p={5}
+          shadow="md"
+          borderWidth="1px"
+          borderRadius="md"
+          _hover={{ bg: "gray.600" }}
+          position="relative"
+          textColor="white"
+        >
+          <Heading fontSize="xl" color={"teal"}>
+            <ChakraLink as={Link} to={`/note/${notebook._id}`}>
+              {notebook.title}
+            </ChakraLink>
+          </Heading>
+          {/* <Text mt={4}>{notebook.content}</Text> */}
+          <Box display={'flex'} justifyContent={'space-between'}>
             <Text mt={4} fontSize="sm" color="gray.500">
               Created at: {new Date(notebook.createdAt).toLocaleString()}
-            </Text>
-            <Text fontSize="sm" color="gray.500">
             </Text>
             <IconButton
               aria-label="Delete Notebook"
@@ -141,14 +148,14 @@ const [deleteNotebook] = useMutation(DELETE_NOTEBOOK_MUTATION, {
               colorScheme="red"
               onClick={() => handleDelete(notebook._id)}
             />
-            </Box>
           </Box>
-        ))
-      ) : (
-        <Text>No notebooks found.</Text>
-      )}
-    </VStack>
-    
+        </Box>
+      ))
+    ) : (
+      <Text>No notebooks found.</Text>
+    )}
+  </VStack>
+  
   );
 };
 
