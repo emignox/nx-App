@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module'; // Importa il modulo User
 import { User } from '../user/user.entity';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 
@@ -39,7 +40,6 @@ dotenv.config();
         if (token) {
           try {
             user = jwtService.verify(token.replace('Bearer ', ''));
-            console.log('Decoded User:', user);  // Logga l'utente decodificato
           } catch (err) {
             console.warn('JWT verification failed:', err.message);
           }

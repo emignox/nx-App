@@ -1,18 +1,20 @@
-import React from 'react';
+// import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import NotebookList from './notebooks.list';
-import NotebookDetail from './single.note';
-import NoteName from './name';
+import Register from './auth/register';
+import Login from './auth/login';
+import MyNotes from './myNotebook/create&getNote';
 
 const App = () => {
   return (
+    <>
     <Router>
-      <NoteName/>
       <Routes>
-        <Route path="/" element={<NotebookList />} />
-        <Route path="/notebook/:id" element={<NotebookDetail />} />
+        <Route path='my-notes' element={<MyNotes />} />
+        <Route path='login' element={<Login />} />
+      <Route path="/" element={<Register />} />
       </Routes>
     </Router>
+    </>
   );
 };
 

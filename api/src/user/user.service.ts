@@ -65,6 +65,7 @@ export class UserService {
         const payload = { sub: user._id, email: user.email };
 
         const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+        console.log('Generated access token:', accessToken);
 
         return { accessToken };
     }

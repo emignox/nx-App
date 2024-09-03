@@ -5,6 +5,7 @@ import { CreateNotebookInput } from '../dto/create-notebook.input';
 import { UpdateNotebookInput } from '../dto/update-notebook.input';
 import { UnauthorizedException ,NotFoundException } from '@nestjs/common';
 
+
 interface MyContext {
   user?: {
     sub: string;
@@ -24,6 +25,25 @@ export class NotebookResolver {
   async getAllNotebooks() {
     return this.notebookService.getNotebooks();
   }
+@Query(() => [NotebookType])
+async getUserNotebooks(@Context() context: MyContext): Promise<NotebookType[]> {
+    const userId = context.user?.sub;
+
+    if (!userId) {
+      throw new UnauthorizedException('User is not authenticated');
+    }
+
+    const tasks = await this.notebookService.getUserTasks(userId);
+
+    return tasks.map(task => ({
+      ...task,
+      _id: task._id.toString(),
+      user: {
+        ...task.user,
+        _id: task.user._id.toString(),
+      },
+    }));
+}
 
   @Query(() => NotebookType)
   async getNotebook(@Args('id') id: string) {
