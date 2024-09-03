@@ -81,59 +81,87 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
   };
 
   return (
-    <Flex direction="column" minH="100vh" align="center" justify="center" bg="gray.100" px={4}>
-      <Box bg="white" p={8} borderRadius="lg" boxShadow="lg" maxW="400px" w="full">
-        <Heading as="h1" size="lg" textAlign="center" mb={6} fontWeight="semibold" color="teal.500">
-          Create Notebook
-        </Heading>
-        <VStack spacing={4}>
-          <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-            <FormControl id="title" isRequired>
-              <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">Title</FormLabel>
-              <Input
-                type="text"
-                name="title"
-                value={formState.title}
-                onChange={handleChange}
-                focusBorderColor="teal.400"
-                placeholder="Notebook title"
-                bg="gray.50"
+    <>
+    <Box  width="100%" display={'flex'}>
+    
+        <Box
+          bg="white"
+          p={8}
+          borderRadius="lg"
+          boxShadow="2xl"
+          maxW="400px"
+          w="full"
+          transition="all 0.3s ease"
+          _hover={{ boxShadow: "lg" }}
+          height={"40%"}
+          position={"fixed"}
+          top={"20%"}
+        >
+          <Heading
+            as="h1"
+            size="lg"
+            textAlign="center"
+            mb={6}
+            fontWeight="bold"
+            color="teal.600"
+          >
+            Create Notebook
+          </Heading>
+          <VStack spacing={4}>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <FormControl id="title" isRequired>
+                <FormLabel fontSize="md" fontWeight="medium" color="gray.700">
+                  Title
+                </FormLabel>
+                <Input
+                  type="text"
+                  name="title"
+                  value={formState.title}
+                  onChange={handleChange}
+                  focusBorderColor="teal.400"
+                  placeholder="Notebook title"
+                  bg="gray.50"
+                  borderRadius="md"
+                  size="md"
+                />
+              </FormControl>
+              <FormControl id="content" isRequired>
+                <FormLabel fontSize="md" fontWeight="medium" color="gray.700">
+                  Content
+                </FormLabel>
+                <Input
+                  type="text"
+                  name="content"
+                  value={formState.content}
+                  onChange={handleChange}
+                  focusBorderColor="teal.400"
+                  placeholder="Notebook content"
+                  bg="gray.50"
+                  borderRadius="md"
+                  size="md"
+                />
+              </FormControl>
+              <Button
+                type="submit"
+                colorScheme="teal"
+                width="full"
+                mt={4}
+                isLoading={loading}
+                size="md"
+                fontWeight="medium"
                 borderRadius="md"
-                size="lg"
-              />
-            </FormControl>
-            <FormControl id="content" isRequired>
-              <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">Content</FormLabel>
-              <Input
-                type="text"
-                name="content"
-                value={formState.content}
-                onChange={handleChange}
-                focusBorderColor="teal.400"
-                placeholder="Notebook content"
-                bg="gray.50"
-                borderRadius="md"
-                size="lg"
-              />
-            </FormControl>
-            <Button
-              type="submit"
-              colorScheme="teal"
-              width="full"
-              mt={4}
-              isLoading={loading}
-              size="lg"
-              fontWeight="medium"
-              borderRadius="md"
-            >
-              Create Notebook
-            </Button>
-          </form>
-        </VStack>
-      </Box>
-      <GetNotes />
-    </Flex>
+              >
+                Create Notebook
+              </Button>
+            </form>
+          </VStack>
+        </Box>
+     <GetNotes />
+   </Box>
+
+   </>
   );
 };
+
 
 export default CreateNotebookForm;

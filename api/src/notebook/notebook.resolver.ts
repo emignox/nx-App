@@ -131,7 +131,20 @@ async getUserNotebook(@Args('id') id: string, @Context() context: MyContext): Pr
     // Assicurati che l'ID sia incluso nell'input
     updateNotebookInput.id = id;
   
-    return this.notebookService.updateNotebook(updateNotebookInput, userId);
+     const notebookUpdated = await  this.notebookService.updateNotebook( updateNotebookInput, userId);
+
+     this.pubSub.publish('notebookUpdated', { notebookUpdated: notebookUpdated });
+     return notebookUpdated;
+  }
+
+  @Subscription(()=> NotebookType, {
+    filter: (payload, variables, context) => {
+      return payload.notebookUpdated.user._id === context.user?.sub;
+    },
+    
+  })
+  notebookUpdated() {
+    return this.pubSub.asyncIterator('notebookUpdated');
   }
   
 
