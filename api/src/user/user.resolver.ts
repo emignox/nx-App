@@ -83,21 +83,22 @@ export class UserResolver {
   }
 
   @Query(() => UserType)
-  async getUserById(@Args('id') id: string, @Context() context: MyContext): Promise<UserType> {
+  async getUserById(
+    @Context() context: MyContext // Recupera il contesto
+  ): Promise<UserType> {
+    // Estrai l'ID utente dal token JWT che si trova nel contesto
     const userId = context.user?.sub;
-
+  
     if (!userId) {
-      throw new UnauthorizedException('User is not authenticated');
+      throw new UnauthorizedException('Utente non autenticato');
     }
-
-    if (userId !== id) {
-      throw new UnauthorizedException('You are not authorized to view this user data');
-    }
-
-    const user = await this.userService.getUserById(id);
+  
+    // Ora, usa l'ID utente per recuperare le informazioni dell'utente
+    const user = await this.userService.getUserById(userId); // Qui usi `userId`, non quello passato via argomenti
     return {
       ...user,
       _id: user._id.toString(),
     };
   }
+  
 }

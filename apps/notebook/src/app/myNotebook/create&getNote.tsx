@@ -101,7 +101,7 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
           borderRadius="lg"
           boxShadow="2xl"
         >
-          <Heading color={'teal.300'} mb={4} textAlign="center">
+          <Heading color={'teal.500'} mb={4} textAlign="center">
             Create a Note
           </Heading>
           <VStack spacing={6}>
@@ -115,7 +115,7 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
                   Title
                 </FormLabel>
                 <Input
-                  textColor={'white'}
+                  textColor={'black'}
                   type="text"
                   name="title"
                   value={formState.title}
@@ -138,7 +138,7 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
                   Content
                 </FormLabel>
                 <Textarea
-                  textColor={'white'}
+                  textColor={'black'}
                   name="content"
                   value={formState.content}
                   onChange={handleChange}
