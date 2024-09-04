@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, Heading, useToast, VStack, Flex } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Heading, useToast, VStack, Flex ,Link} from '@chakra-ui/react';
 import { useMutation } from '@apollo/client';
 import { gql } from 'graphql-tag';
 import { useNavigate } from 'react-router-dom';
@@ -125,7 +125,11 @@ const LoginForm = () => {
             </Button>
           </form>
         </VStack>
+        <Link href="/" color="teal.500"   >
+              You don't have an account? Register
+            </Link>  
       </Box>
+ 
     </Flex>
   );
 };
