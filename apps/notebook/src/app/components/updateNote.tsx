@@ -53,7 +53,7 @@ const UpdateNotebookForm = () => {
 
   return (
     <Box
-    bgGradient="linear(to-r, gray.900, gray.700)"
+    bg={'gray.100'}
     width={"100%"}
     p={4}
   >
@@ -65,7 +65,7 @@ const UpdateNotebookForm = () => {
         shadow="md"
         borderWidth="1px"
         borderRadius="md"
-        bg="gray.800"
+        bg="gray.50"
         borderColor="gray.600"
       >
         <FormControl id="title" isRequired>
@@ -76,8 +76,8 @@ const UpdateNotebookForm = () => {
             value={formState.title}
             onChange={handleChange}
             placeholder="Enter notebook title"
-            bg="gray.700"
-            color="white"
+            bg="gray.50"
+            color="gray.900"
             focusBorderColor="teal.400"
             size={"sm"}
           />
@@ -89,8 +89,8 @@ const UpdateNotebookForm = () => {
             value={formState.content}
             onChange={handleChange}
             placeholder="Enter notebook content"
-            bg="gray.700"
-            color="white"
+            bg="gray.50"
+            color="gray.900"
             focusBorderColor="teal.400"
             size={'sm'}
           />

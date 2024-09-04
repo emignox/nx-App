@@ -117,18 +117,18 @@ const [deleteNotebook] = useMutation(DELETE_NOTEBOOK_MUTATION, {
     p={4}
   >
     <Heading as="h2" size="xl" textAlign="center" color={"teal"}>
-      My Notebooks
+      My Note
     </Heading>
     {reversedData && reversedData.length > 0 ? (
       reversedData.map((notebook: UserNotebooksProps) => (
         <Box
-          bg="gray.800"
+          bg="gray.100"
           key={notebook._id}
           p={5}
           shadow="md"
           borderWidth="1px"
           borderRadius="md"
-          _hover={{ bg: "gray.600" }}
+          _hover={{ bg: "gray.50",  transition: "all.2s ease" }}
           position="relative"
           textColor="white"
         >

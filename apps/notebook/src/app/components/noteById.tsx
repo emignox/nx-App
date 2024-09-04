@@ -21,11 +21,11 @@ const NotebookDetail = () => {
   return (
     <>
      <Box
-      bgGradient="linear(to-r, gray.900, gray.700)"
+     bg={'gray.100'}
       width={"100%"}
       height={"100vh"}
     >
-       <Link as={RouterLink} to={"/my-notes"} color={"teal.500"} display={'flex'} alignItems={'center'} >
+       <Link as={RouterLink} to={"/my-notes"} color={"teal.500"} display={'flex'} alignItems={'center'} p={4} >
         <IoIosBackspace size={30}  /> 
        </Link>
       <Heading textAlign={'center'} color={'teal.500'} as={'h1'}>
@@ -33,11 +33,11 @@ const NotebookDetail = () => {
       </Heading>
       <UpdateNote />
       <VStack spacing={4} align="stretch" maxW="3xl" mx="auto" mt={10} p={4}>
-        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md" bg="gray.800" borderColor="gray.600">
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md" bg="gray.50" borderColor="gray.600">
         <Heading as="h3" size="lg" textAlign="left" color="teal.500" py={2}>
           {notebook.title}
         </Heading>
-          <Text fontSize="lg" color="gray.300">
+          <Text fontSize="lg" color="gray.900">
             {notebook.content}
           </Text>
           <Box display={'flex'}  alignItems={'center'} justifyContent={'space-between'}  pt={3}>

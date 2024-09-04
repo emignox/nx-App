@@ -82,7 +82,7 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
 
   return (
     <Box
-      bgGradient="linear(to-r, gray.900, gray.700)"
+    bg={'gray.100'}
       minH="100vh"
       p={6}
     >
@@ -96,7 +96,7 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
       >
         <Box
           width="100%"
-          bg="gray.800"
+          bg="gray.50"
           p={{ base: 6, md: 8 }}
           borderRadius="lg"
           boxShadow="2xl"
@@ -122,11 +122,11 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
                   onChange={handleChange}
                   focusBorderColor="teal.400"
                   placeholder="Enter notebook title"
-                  bg="gray.700"
+                  bg="gray.50"
                   borderRadius="md"
                   size="sm"
-                  _hover={{ bg: "gray.600" }}
-                  _focus={{ bg: "gray.600", borderColor: "teal.500" }}
+                  _hover={{ bg: "gray.100" }}
+                  _focus={{ bg: "gray.100", borderColor: "teal.500" }}
                 />
               </FormControl>
               <FormControl id="content" isRequired mt={4}>
@@ -144,12 +144,12 @@ const CreateNotebookForm: React.FC<CreateNotebookFormProps> = ({ client }) => {
                   onChange={handleChange}
                   focusBorderColor="teal.400"
                   placeholder="Enter notebook content"
-                  bg="gray.700"
+                  bg="gray.50"
                   borderRadius="md"
                   size="sm"
                   rows={6}
-                  _hover={{ bg: "gray.600" }}
-                  _focus={{ bg: "gray.600", borderColor: "teal.500" }}
+                  _hover={{ bg: "gray.100" }}
+                  _focus={{ bg: "gray.100", borderColor: "teal.500" }}
                 />
               </FormControl>
               <Flex mt={6} justify="space-between">

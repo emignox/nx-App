@@ -5,11 +5,12 @@ import Login from './auth/login';
 import MyNotes from './myNotebook/create&getNote'; 
 import client from './apollo.client';
 import NoteDetails from './components/noteById'
-
+import Menu from './menu';
 const App = () => {
   return (
     <>
     <Router>
+      <Menu/>
       <Routes>
         <Route path='note/:id' element={<NoteDetails />} />
         <Route path='my-notes' element={<MyNotes client={client}  />} />
