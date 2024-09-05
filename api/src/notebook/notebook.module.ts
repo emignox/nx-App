@@ -17,7 +17,7 @@ dotenv.config();
 @Module({
   imports: [
     MikroOrmModule.forRoot(defineConfig({
-      clientUrl: 'mongodb://localhost:27017/notebook-management',
+      clientUrl: process.env.MONGO_CONNECTION ||'mongodb://localhost:27017',
       entities: [Task, User],
       dbName: 'notebook-management',
     })),

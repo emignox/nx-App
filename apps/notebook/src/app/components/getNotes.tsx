@@ -85,7 +85,7 @@ useEffect(() => {
   });
 
   if (loading) return <Spinner size="xl" />;
-  if (error) return <Text color="red.500">Error: {error.message}</Text>;
+  if (error) return <Text color="red.500"> {error.message}</Text>;
 
   const handleDelete = async (id: string) => {
     await deleteNotebook({ variables: { id } });
@@ -138,7 +138,7 @@ useEffect(() => {
                     boxSize="10px"
                     display="inline-block"
                   />
-                  <Heading fontSize="xl" color={"teal"}>
+                  <Heading fontSize="xl" color={"teal"} fontFamily={"Bebas Neue, sans-serif"}>
                     <ChakraLink as={Link} to={`/note/${notebook._id}`}>
                       {notebook.title}
                     </ChakraLink>

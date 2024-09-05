@@ -19,7 +19,7 @@ export class NotebookService {
     const tasks = await this.em.find(Task, { user: new ObjectId(userId) });
 
     if (!tasks || tasks.length === 0) {
-      throw new NotFoundException(`No tasks found for user with ID ${userId}`);
+      throw new NotFoundException(`No tasks found for user,  create your new first Note 😄`);
     }
 
     return tasks;

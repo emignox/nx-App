@@ -24,8 +24,8 @@ function Jumbo(){
 
         {/* Text outside of the teal box in black */}
         <Box textAlign="center" color="black">
-          <Heading fontSize="6xl" mb={5}>
-            Welcome<br/> to My Learning App!
+          <Heading fontSize="6xl" mb={5} fontFamily={"Bebas Neue, sans-serif"}>
+            Welcome<br/> to My Notebook App!
           </Heading>
           <Text fontSize="lg">
             This app was created to learn  and practice the following technologies.

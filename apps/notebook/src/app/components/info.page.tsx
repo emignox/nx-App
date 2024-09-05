@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
 
         {/* Text outside of the teal box in black */}
         <Box textAlign="center" color="black">
-          <Heading fontSize="6xl" mb={5}>
+          <Heading fontSize="6xl" mb={5} fontFamily={"Bebas Neue, sans-serif"}>
             Keep Alive this<br/> Planet!
           </Heading>
           <Text fontSize="lg"  px={20} >
