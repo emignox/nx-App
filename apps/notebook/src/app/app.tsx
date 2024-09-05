@@ -10,19 +10,17 @@ import HomePage from './components/info.page';
 
 const App = () => {
   return (
-    <>
-      <Router>
-        <Menu />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/pro" element={<Profile userId="" />} />
-          <Route path="note/:id" element={<NoteDetails />} />
-          <Route path="my-notes" element={<MyNotes client={client} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Router>
-    </>
+    <Router basename='/'>
+      <Menu />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pro" element={<Profile userId="" />} />
+        <Route path="note/:id" element={<NoteDetails />} />
+        <Route path="my-notes" element={<MyNotes client={client} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
   );
 };
 
