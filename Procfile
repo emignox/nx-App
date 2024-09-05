@@ -1,1 +1,1 @@
-web: node dist/apps/api/main.js
+web: npx nx  dist/apps/api/main.js
