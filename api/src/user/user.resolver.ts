@@ -49,6 +49,7 @@ export class UserResolver {
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
     @Context() context: MyContext,
   ): Promise<UserType> {
+    console.log('Update Input:', updateUserInput);  // Logga l'input ricevuto
     const userId = context.user?.sub;
 
     if (!userId) {

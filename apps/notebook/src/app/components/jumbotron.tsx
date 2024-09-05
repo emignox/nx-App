@@ -39,7 +39,7 @@ function Jumbo(){
               bg: 'teal.300',
               color: 'gray.100',
             }}
-            transition="all 1s ease-in-out"
+            transition="all 1s"
             fontSize={"lg"}
             fontWeight="medium"
           >

@@ -1,4 +1,4 @@
-import { Box, Link, Heading } from "@chakra-ui/react";
+import { Box, Link, Heading, flexbox } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
 import React from "react";
 
@@ -34,10 +34,15 @@ function Menu() {
       {/* Verifica se il token è presente: se sì, mostra il profilo; altrimenti mostra Login/Register */}
       {token ? (
         <Link
-          href={token ? "/pro" : "/login"}
-          _hover={{ textDecoration: 'none' }}  // Disabilita underline all'hover
-          textDecoration="none"  // Disabilita underline di default
-        >
+        color={'white'}
+        alignItems={'center'}
+        justifyItems={'center'}
+        display={'flex'}
+        href={token ? "/pro" : "/login"}
+        _hover={{ textDecoration: 'none' }}  // Disabilita underline all'hover
+        textDecoration="none"  // Disabilita underline di default
+        > 
+         Profile
           <CgProfile size={40} color="white" />
         </Link>
       ) : (

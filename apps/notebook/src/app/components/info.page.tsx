@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
      
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} px={5} my={300}>
         {techs.map((tech) => (
-          <Card key={tech.name} bg="gray.200" borderRadius="md" boxShadow="md" overflow="hidden" _hover={{transform:'scale(0.97)',        boxShadow: 'inset 0px 0px 15px rgba(49, 151, 149, 0.6)'}} transition={'all 0.8s '}>
+          <Card key={tech.name} bg="gray.200" borderRadius="md" boxShadow="md" overflow="hidden" _hover={{transform:'scale(0.97)',        boxShadow: 'inset 0px 0px 15px rgba(49, 151, 149, 0.6)'}} transition={'all 0.3s '}>
             <CardBody display="flex" flexDirection="column" alignItems="center">
               <Box mb={5}>{tech.icon}</Box> {/* Display the icon */}
               <Heading fontSize="xl" mb={2}>
