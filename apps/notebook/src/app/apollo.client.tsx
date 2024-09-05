@@ -4,17 +4,17 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-// Retrieve the JWT token from localStorage
+//Retrieve the JWT token from localStorage
 const token = localStorage.getItem('token');
 
 // Configure the HTTP link
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3000/graphql',
+  uri: 'https://afternoon-scrubland-85283-37861c0d3dbe.herokuapp.com/graphql',
 });
 
 // Configure the WebSocket link using graphql-ws
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:3000/graphql',
+  url: 'wss://afternoon-scrubland-85283-37861c0d3dbe.herokuapp.com/graphql',
   connectionParams: {
     authToken: token ? `Bearer ${token}` : "",
   },
