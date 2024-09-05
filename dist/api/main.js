@@ -5,29 +5,35 @@
 /* 1 */
 /***/ ((module) => {
 
-module.exports = require("@nestjs/common");
+module.exports = require("tslib");
 
 /***/ }),
 /* 2 */
 /***/ ((module) => {
 
-module.exports = require("@nestjs/core");
+module.exports = require("@nestjs/common");
 
 /***/ }),
 /* 3 */
 /***/ ((module) => {
 
-module.exports = require("reflect-metadata");
+module.exports = require("@nestjs/core");
 
 /***/ }),
 /* 4 */
+/***/ ((module) => {
+
+module.exports = require("reflect-metadata");
+
+/***/ }),
+/* 5 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotebookModule = void 0;
-const tslib_1 = __webpack_require__(5);
-const common_1 = __webpack_require__(1);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const nestjs_1 = __webpack_require__(6);
 const notebook_service_1 = __webpack_require__(7);
 const notebook_controller_1 = __webpack_require__(12);
@@ -103,12 +109,6 @@ exports.NotebookModule = NotebookModule = tslib_1.__decorate([
 
 
 /***/ }),
-/* 5 */
-/***/ ((module) => {
-
-module.exports = require("tslib");
-
-/***/ }),
 /* 6 */
 /***/ ((module) => {
 
@@ -122,8 +122,8 @@ module.exports = require("@mikro-orm/nestjs");
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotebookService = void 0;
-const tslib_1 = __webpack_require__(5);
-const common_1 = __webpack_require__(1);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const notebook_entity_1 = __webpack_require__(8);
 const mongodb_1 = __webpack_require__(10);
 const core_1 = __webpack_require__(9);
@@ -212,7 +212,7 @@ exports.NotebookService = NotebookService = tslib_1.__decorate([
 var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Task = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const core_1 = __webpack_require__(9);
 const mongodb_1 = __webpack_require__(10);
 const user_entity_1 = __webpack_require__(11);
@@ -276,7 +276,7 @@ module.exports = require("@mikro-orm/mongodb");
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.User = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const core_1 = __webpack_require__(9);
 const notebook_entity_1 = __webpack_require__(8);
 const mongodb_1 = __webpack_require__(10);
@@ -319,8 +319,8 @@ exports.User = User = tslib_1.__decorate([
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotebookController = void 0;
-const tslib_1 = __webpack_require__(5);
-const common_1 = __webpack_require__(1);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const notebook_service_1 = __webpack_require__(7);
 const create_notebook_input_1 = __webpack_require__(13);
 const update_notebook_input_1 = __webpack_require__(15);
@@ -409,7 +409,7 @@ exports.NotebookController = NotebookController = tslib_1.__decorate([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CreateNotebookInput = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 let CreateNotebookInput = class CreateNotebookInput {
 };
@@ -440,7 +440,7 @@ module.exports = require("@nestjs/graphql");
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UpdateNotebookInput = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 let UpdateNotebookInput = class UpdateNotebookInput {
 };
@@ -476,13 +476,13 @@ module.exports = require("@nestjs/apollo");
 var _a, _b, _c, _d, _e, _f;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotebookResolver = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 const notebook_service_1 = __webpack_require__(7);
 const notebook_type_1 = __webpack_require__(18);
 const create_notebook_input_1 = __webpack_require__(13);
 const update_notebook_input_1 = __webpack_require__(15);
-const common_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const graphql_subscriptions_1 = __webpack_require__(20);
 let NotebookResolver = class NotebookResolver {
     constructor(notebookService, pubSub) {
@@ -660,7 +660,7 @@ exports.NotebookResolver = NotebookResolver = tslib_1.__decorate([
 var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotebookType = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 const user_type_1 = __webpack_require__(19);
 let NotebookType = class NotebookType {
@@ -703,7 +703,7 @@ exports.NotebookType = NotebookType = tslib_1.__decorate([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserType = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 const notebook_type_1 = __webpack_require__(18);
 let UserType = class UserType {
@@ -749,8 +749,8 @@ module.exports = require("@nestjs/jwt");
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserModule = void 0;
-const tslib_1 = __webpack_require__(5);
-const common_1 = __webpack_require__(1);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const nestjs_1 = __webpack_require__(6);
 const user_service_1 = __webpack_require__(23);
 const user_controller_1 = __webpack_require__(26);
@@ -777,8 +777,8 @@ exports.UserModule = UserModule = tslib_1.__decorate([
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserService = void 0;
-const tslib_1 = __webpack_require__(5);
-const common_1 = __webpack_require__(1);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const user_entity_1 = __webpack_require__(11);
 const jwt = tslib_1.__importStar(__webpack_require__(24));
 const mongodb_1 = __webpack_require__(10);
@@ -924,8 +924,8 @@ module.exports = require("bcrypt");
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserController = void 0;
-const tslib_1 = __webpack_require__(5);
-const common_1 = __webpack_require__(1);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 const user_service_1 = __webpack_require__(23);
 const user_create_input_1 = __webpack_require__(27);
 const user_update_input_1 = __webpack_require__(28);
@@ -1012,7 +1012,7 @@ exports.UserController = UserController = tslib_1.__decorate([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CreateUserInput = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 let CreateUserInput = class CreateUserInput {
 };
@@ -1041,7 +1041,7 @@ exports.CreateUserInput = CreateUserInput = tslib_1.__decorate([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UpdateUserInput = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 let UpdateUserInput = class UpdateUserInput {
 };
@@ -1070,7 +1070,7 @@ exports.UpdateUserInput = UpdateUserInput = tslib_1.__decorate([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.loginUserInput = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 let loginUserInput = class loginUserInput {
 };
@@ -1095,7 +1095,7 @@ exports.loginUserInput = loginUserInput = tslib_1.__decorate([
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ChangePasswordInput = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 let ChangePasswordInput = class ChangePasswordInput {
 };
@@ -1125,14 +1125,14 @@ exports.ChangePasswordInput = ChangePasswordInput = tslib_1.__decorate([
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserResolver = void 0;
-const tslib_1 = __webpack_require__(5);
+const tslib_1 = __webpack_require__(1);
 const graphql_1 = __webpack_require__(14);
 const user_service_1 = __webpack_require__(23);
 const user_type_1 = __webpack_require__(19);
 const user_create_input_1 = __webpack_require__(27);
 const user_update_input_1 = __webpack_require__(28);
 const user_login_input_1 = __webpack_require__(29);
-const common_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
 let UserResolver = class UserResolver {
     constructor(userService) {
         this.userService = userService;
@@ -1285,22 +1285,27 @@ var __webpack_exports__ = {};
 (() => {
 var exports = __webpack_exports__;
 
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const common_1 = __webpack_require__(1);
-const core_1 = __webpack_require__(2);
-__webpack_require__(3);
-const notebook_module_1 = __webpack_require__(4);
+const tslib_1 = __webpack_require__(1);
+const common_1 = __webpack_require__(2);
+const core_1 = __webpack_require__(3);
+__webpack_require__(4);
+const notebook_module_1 = __webpack_require__(5);
+const dotenv = tslib_1.__importStar(__webpack_require__(32));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(notebook_module_1.NotebookModule);
     const globalPrefix = 'api';
     app.setGlobalPrefix(globalPrefix);
     const port = process.env.PORT || 3000;
+    dotenv.config();
     const corsOptions = {
-        origin: ['http://localhost:4200', 'http://localhost:4300'],
+        origin: [
+            'http://localhost:4200',
+            'http://localhost:4300',
+            process.env.DOMAIN
+        ],
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true, // Se necessario per autenticazione con cookie o token
     };
     app.enableCors(corsOptions);
     await app.listen(port);

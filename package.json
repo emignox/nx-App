@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {  
-    "heroku-postbuild": "nx build api && nx build notebook"
-  },
+    "heroku-postbuild": "nx build api && nx build notebook"  },
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.11.4",

@@ -9,7 +9,7 @@ function Menu() {
   return (
     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} bg={'teal.600'} mb={50} p={3}>
       <Link
-        href="/home"
+        href="/"
         _hover={{ textDecoration: 'none' }}  // Disabilita underline all'hover
         textDecoration="none"  // Disabilita underline di default
       >
@@ -53,7 +53,7 @@ function Menu() {
           color="teal.100"
           fontSize="lg"
         >
-          Login / Register
+          Login 
         </Link>
       )}
     

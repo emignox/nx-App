@@ -125,7 +125,7 @@ const LoginForm = () => {
             </Button>
           </form>
         </VStack>
-        <Link href="/" color="teal.500"   >
+        <Link href="/register" color="teal.500"   >
               You don't have an account? Register
             </Link>  
       </Box>

@@ -12,7 +12,7 @@ export default defineConfig({
     host: 'localhost',
     proxy:{
       '/graphql': {
-        target: '',
+        target: 'https://afternoon-scrubland-85283.herokuapp.com',
         changeOrigin: true,
         secure:false,
         rewrite: (path) => path.replace(/^\/graphql/, '/graphql'),
