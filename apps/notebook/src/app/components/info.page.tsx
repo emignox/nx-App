@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
   return (
     <Box bg="gray.100" display={'flex'} flexDir={'column'}  justifyContent={'center'} alignItems={'center'} minH="100vh" py={10}>
       {/* Jumbotron */}
-      <Stack direction={{ base: 'column', md: 'row' }} align="center" justify="center" spacing={8} m={5} w={"80%"} py={10} px={5} bg={'gray.50'} boxShadow={'md'} rounded={'md'}>
+      <Stack direction={{ base: 'column', md: 'row' }} align="center" justify="center"  spacing={{base:"50", md:"200"}} m={5} w={"95%"} py={10} px={5} bg={'gray.50'} boxShadow={'md'} rounded={'md'}>
         {/* Box for the image inside teal background */}
         <Box bg="teal.500" p={10} borderRadius="md"
          _hover={{ borderRadius: "full",
@@ -47,12 +47,15 @@ const HomePage: React.FC = () => {
           <Button
             mt={5}
             bg={'teal.500'}
-            size="lg"
+            size="md"
             _hover={{
               borderRadius: "full",
               bg: 'teal.300',
+              color: 'gray.100',
             }}
             transition="all 1s ease-in-out"
+            fontSize={"lg"}
+            fontWeight="medium"
           >
             Learn More
           </Button>
