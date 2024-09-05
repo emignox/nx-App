@@ -1,1 +1,1 @@
-web: npx serve dist/apps/notebook
+web: node dist/api/main.js
