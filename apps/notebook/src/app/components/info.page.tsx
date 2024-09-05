@@ -1,6 +1,7 @@
 import { Box, Button, Heading, Stack, Text, SimpleGrid, Card, CardBody,Image } from '@chakra-ui/react';
 import React from 'react';
 import { SiReact, SiTypescript, SiChakraui, SiNestjs,  SiGraphql, SiApollographql,SiMikrotik } from 'react-icons/si'; // Import delle icone
+import Jumbo from './jumbotron';
 
 interface Tech {
   name: string;
@@ -20,16 +21,34 @@ const techs: Tech[] = [
 const HomePage: React.FC = () => {
   return (
     <Box bg="gray.100" display={'flex'} flexDir={'column'}  justifyContent={'center'} alignItems={'center'} minH="100vh" py={10}>
-      {/* Jumbotron */}
-      <Stack direction={{ base: 'column', md: 'row' }} align="center" justify="center"  spacing={{base:"50", md:"200"}} m={5} w={"95%"} py={10} px={5} bg={'gray.50'} boxShadow={'md'} rounded={'md'}>
+    <Jumbo />
+
+     
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} px={5} my={300}>
+        {techs.map((tech) => (
+          <Card key={tech.name} bg="gray.200" borderRadius="md" boxShadow="md" overflow="hidden" _hover={{transform:'scale(0.97)',        boxShadow: 'inset 0px 0px 15px rgba(49, 151, 149, 0.6)'}} transition={'all 0.8s '}>
+            <CardBody display="flex" flexDirection="column" alignItems="center">
+              <Box mb={5}>{tech.icon}</Box> {/* Display the icon */}
+              <Heading fontSize="xl" mb={2}>
+                {tech.name}
+              </Heading>
+              <Text textAlign="center">
+                {`This app utilizes ${tech.name} to manage and build its structure.`}
+              </Text>
+            </CardBody>
+          </Card>
+        ))}
+      </SimpleGrid>
+
+      <Stack  direction={{ base: 'column', md: 'row-reverse' }} align="center" justify="center"  spacing={{base:"50", md:"10"}} m={5} w={"95%"} py={3} px={2} bg={'gray.200'} boxShadow={'md'} rounded={'md'}>
         {/* Box for the image inside teal background */}
-        <Box bg="teal.500" p={10} borderRadius="md"
+        <Box  borderRadius="md"
          _hover={{ borderRadius: "full",
-         bg: 'teal.300',}} 
+}} 
          transition="all 1s ease-in-out">
           <Box fontSize="150px" color="white">
             {/* React icon inside the Jumbotron */}
-            <Image w={'200px'} src='/notebookPic.png'>
+            <Image w={'900px'} src='/three-Photoroom.png'>
                 {/* Add your image here */}
               </Image>
 
@@ -39,11 +58,12 @@ const HomePage: React.FC = () => {
         {/* Text outside of the teal box in black */}
         <Box textAlign="center" color="black">
           <Heading fontSize="6xl" mb={5}>
-            Welcome to<br/> My Learning App!
+            Keep Alive this<br/> Planet!
           </Heading>
-          <Text fontSize="lg">
-            This app was created to learn  and practice the following technologies.
-          </Text>
+          <Text fontSize="lg"  px={20} >
+          Help prevent deforestation — every day, 
+           an estimated 80,000 acres of forests are cut down, with millions of trees lost.
+            By taking action, you can help protect these vital ecosystems and reduce the devastating impact on our planet.        </Text>
           <Button
             mt={5}
             bg={'teal.500'}
@@ -61,23 +81,6 @@ const HomePage: React.FC = () => {
           </Button>
         </Box>
       </Stack>
-
-      {/* Tech Cards */}
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} px={5}>
-        {techs.map((tech) => (
-          <Card key={tech.name} bg="gray.50" borderRadius="md" boxShadow="md" overflow="hidden">
-            <CardBody display="flex" flexDirection="column" alignItems="center">
-              <Box mb={5}>{tech.icon}</Box> {/* Display the icon */}
-              <Heading fontSize="xl" mb={2}>
-                {tech.name}
-              </Heading>
-              <Text textAlign="center">
-                {`This app utilizes ${tech.name} to manage and build its structure.`}
-              </Text>
-            </CardBody>
-          </Card>
-        ))}
-      </SimpleGrid>
     </Box>
   );
 };

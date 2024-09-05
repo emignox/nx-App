@@ -7,9 +7,9 @@ function Menu() {
   const token = localStorage.getItem("token");
 
   return (
-    <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} bg={'teal.600'} p={3}>
+    <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} bg={'teal.600'} mb={50} p={3}>
       <Link
-        href="/my-notes"
+        href="/home"
         _hover={{ textDecoration: 'none' }}  // Disabilita underline all'hover
         textDecoration="none"  // Disabilita underline di default
       >
