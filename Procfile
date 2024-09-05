@@ -1,1 +1,1 @@
-web: npx serve dist/apps/notebook/asset
+web: npx serve dist/apps/notebook
