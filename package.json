@@ -2,8 +2,9 @@
   "name": "@task-management-app/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {  
-    "heroku-postbuild": "nx build api && nx build notebook"  },
+  "scripts": {
+    "heroku-postbuild": "nx build api && nx build notebook"
+  },
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.11.4",
@@ -39,6 +40,7 @@
     "react-router-dom": "^6.26.1",
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.0",
+    "serve": "^14.2.3",
     "styled-components": "^5.3.6",
     "subscriptions-transport-ws": "^0.11.0",
     "tslib": "^2.3.0"
